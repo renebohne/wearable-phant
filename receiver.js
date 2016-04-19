@@ -37,6 +37,7 @@ setInterval(function(){
         console.log("+ eof")
     } else {
         console.log("+ got", rd['cpm'])
+        show(rd['cpm']);
     }
 })
   }, updateTime);
@@ -47,14 +48,16 @@ process.on('SIGINT', function(){
 	process.nextTick(function() { process.exit(0);})
 });
 
-function visualisation()
+function show(cpm)
 {
-  var uint32 = new Uint32Array(64);
-		var count = 0;
-		for(var i=4; i<uint8.length;i=i+3)
+	var renderData = new Uint32Array(NUMLEDS);
+	for(var i=0; i<NUMLEDS;i++)
+	{
+		renderData[i] = 0;
+		if(cpm > i)
 		{
-			uint32[count] = (uint8[i] << 16) | (uint8[i+1] <<8) | uint8[i+2];				count++;
-			
+			renderData[i] = 0x0000FF;//blue
 		}
-		ws281x.render(uint32);
+	}
+	ws281x.render(renderData);
 }
