@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "phant-client": "0.0.6"
+    "phant-client": "0.0.6",
+    "rpi-ws281x-native": "^0.8.1"
   }
 }

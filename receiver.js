@@ -7,7 +7,7 @@ var Phant = require('phant-client').Phant;
 var phant = new Phant();
 var iri = 'https://data.sparkfun.com/streams/' + publicKey;
 var fs = require('fs');
-var updateTime = 1000; // ms -- default: 1000 = 1 second
+var updateTime = 30000; // ms -- default: 30000 = 30 seconds
 var myStream  = null;
 var  sys = require('util');
 var  exec = require('child_process').exec;
@@ -30,13 +30,13 @@ phant.connect(iri, function(error, streamd) {
 //send data every 25 seconds (default) to data.sparkfun.com
 setInterval(function(){
     //console.log("fetching geiger data...");
-    phant.latest(streamd, function(error, rd) {
+    phant.latest(myStream, function(error, rd) {
     if (error) {
         console.log("# error", error)
     } else if (rd === null) {
         console.log("+ eof")
     } else {
-        console.log("+ got", rd)
+        console.log("+ got", rd['cpm'])
     }
 })
   }, updateTime);
